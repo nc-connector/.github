@@ -1,6 +1,6 @@
 <p align="center">
   <img
-    src="https://raw.githubusercontent.com/nc-connector/.github/profile/header-solid-blue.png"
+    src="https://raw.githubusercontent.com/nc-connector/.github/refs/heads/main/profile/header-solid-blue.png"
     alt="nc-connector header"
     width="1280"
   />
