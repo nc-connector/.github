@@ -6,8 +6,6 @@
   />
 </p>
 
-<h1 align="center">nc-connector</h1>
-
 <p align="center">
   <b>Community add-ons that bring Nextcloud workflows directly into mail & calendar clients.</b><br/>
   Talk meetings, secure sharing links (Filelink), and less copy-paste — with a focus on security defaults, policies, and admin-friendly diagnostics.
