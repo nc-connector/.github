@@ -1,6 +1,6 @@
 <p align="center">
   <img
-    src="https://raw.githubusercontent.com/nc-connector/NC_Connector_for_Thunderbird/main/ui/assets/header-solid-blue-1920x480.png"
+    src="https://raw.githubusercontent.com/nc-connector/.github/profile/header-solid-blue.png"
     alt="nc-connector header"
     width="1280"
   />
