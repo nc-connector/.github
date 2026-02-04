@@ -30,7 +30,7 @@
   <a href="https://github.com/nc-connector/NC_Connector_for_Thunderbird/stargazers">
     <img alt="Stars" src="https://img.shields.io/github/stars/nc-connector/NC_Connector_for_Thunderbird?style=flat">
   </a>
-  <a href="https://paypal.me/DeBaschdi">
+  <a href="https://www.paypal.com/donate/?hosted_button_id=FTZWNRNKVKUN6">
     <img alt="Donate" src="https://img.shields.io/badge/Donate-PayPal-00457C?logo=paypal&logoColor=white">
   </a>
 </p>
