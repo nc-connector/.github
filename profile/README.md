@@ -39,7 +39,7 @@
 
 ## ❤️ Support this project
 If you find these connectors useful and want to support ongoing development, you can donate here:  
-👉 https://paypal.me/DeBaschdi
+👉 [Paypal](https://www.paypal.com/donate/?hosted_button_id=FTZWNRNKVKUN6)
 
 ---
 
