@@ -15,8 +15,8 @@
   <a href="https://github.com/nc-connector/NC_Connector_for_Thunderbird">
     <img alt="Thunderbird Repo" src="https://img.shields.io/badge/Repo-NC__Connector__for__Thunderbird-2e6ee6?logo=github&logoColor=white">
   </a>
-  <a href="https://github.com/nc-connector/nextcloud_enterprise_outlook">
-    <img alt="Outlook Repo" src="https://img.shields.io/badge/Repo-nextcloud__enterprise__outlook-2e6ee6?logo=github&logoColor=white">
+  <a href="https://github.com/nc-connector/NC_Connector_for_Outlook">
+    <img alt="Outlook Repo" src="https://img.shields.io/badge/Repo-NC__Connector__for__Outlook-2e6ee6?logo=github&logoColor=white">
   </a>
 </p>
 
@@ -61,8 +61,8 @@ If you find these connectors useful and want to support ongoing development, you
 
 ---
 
-### 2) Nextcloud Enterprise for Outlook (Classic)
-**Repo:** https://github.com/nc-connector/nextcloud_enterprise_outlook  
+### 2) NC Connector for Outlook (Classic)
+**Repo:** https://github.com/nc-connector/NC_Connector_for_Outlook  
 **What it solves:** Professional Nextcloud workflow in Outlook Classic: Talk links in calendar events, Filelink assistant for emails — plus admin features.
 
 **Highlights**
