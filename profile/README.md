@@ -74,14 +74,13 @@ If you find these connectors useful and want to support ongoing development, you
 </p>
 
 **Repo:** https://github.com/nc-connector/NC_Connector_for_Outlook  
-**What it solves:** Professional Nextcloud workflow in Outlook Classic: Talk links in calendar events, Filelink assistant for emails — plus admin features.
+**What it solves:** Create Talk meetings from calendar events and generate secure Nextcloud shares right from the compose window with local Free/Busy gateway — without browser detours.
 
 **Highlights**
-- ✅ **Talk link workflow:** event conversations (NC ≥ 31) or classic rooms, lobby until start, optional password
-- ✅ **Filelink wizard:** permissions/password/expiration/note, structured target paths, ready-to-send HTML block
-- ✅ **Login Flow v2:** sign-in via browser or app password
+- ✅ **Talk wizard in calendar events:** create rooms, lobby until start time, passwords, moderator delegation
+- ✅ **Sharing/Filelink wizard in emails:** upload queue, password generator, expiration date, optional note, ready-to-send HTML block
+- ✅ **Troubleshooting-friendly:** structured debug logs
 - ✅ **IFB (Free/Busy gateway):** local listener for availability lookups
-- ✅ **Debug logging:** useful logs for support & admins
 
 **Get it**
 - Releases/MSI: [https://github.com/nc-connector/NC_Connector_for_Outlook/releases](https://github.com/nc-connector/NC_Connector_for_Outlook/releases/latest)
