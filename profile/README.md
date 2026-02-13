@@ -55,7 +55,7 @@ If you find these connectors useful and want to support ongoing development, you
 
 **Get it**
 - Add-on Store: https://addons.thunderbird.net/thunderbird/addon/nc4tb/
-- Releases/XPI: https://github.com/nc-connector/NC_Connector_for_Thunderbird/releases
+- Releases/XPI: https://github.com/nc-connector/NC_Connector_for_Thunderbird/releases/latest
 
 ---
 
@@ -82,6 +82,9 @@ If you find these connectors useful and want to support ongoing development, you
 - ✅ **Login Flow v2:** sign-in via browser or app password
 - ✅ **IFB (Free/Busy gateway):** local listener for availability lookups
 - ✅ **Debug logging:** useful logs for support & admins
+
+**Get it**
+- Releases/MSI: [https://github.com/nc-connector/NC_Connector_for_Outlook/releases](https://github.com/nc-connector/NC_Connector_for_Outlook/releases/latest)
 
 ---
 
