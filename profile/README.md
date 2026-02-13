@@ -20,21 +20,6 @@
   </a>
 </p>
 
-<p align="center">
-  <a href="https://github.com/nc-connector/NC_Connector_for_Thunderbird/releases">
-    <img alt="Releases" src="https://img.shields.io/github/v/release/nc-connector/NC_Connector_for_Thunderbird?display_name=tag&logo=github">
-  </a>
-  <a href="https://github.com/nc-connector/NC_Connector_for_Thunderbird/blob/main/LICENSE">
-    <img alt="License" src="https://img.shields.io/badge/License-AGPL--3.0-informational">
-  </a>
-  <a href="https://github.com/nc-connector/NC_Connector_for_Thunderbird/stargazers">
-    <img alt="Stars" src="https://img.shields.io/github/stars/nc-connector/NC_Connector_for_Thunderbird?style=flat">
-  </a>
-  <a href="https://www.paypal.com/donate/?hosted_button_id=FTZWNRNKVKUN6">
-    <img alt="Donate" src="https://img.shields.io/badge/Donate-PayPal-00457C?logo=paypal&logoColor=white">
-  </a>
-</p>
-
 ---
 
 ## ❤️ Support this project
@@ -46,6 +31,19 @@ If you find these connectors useful and want to support ongoing development, you
 ## 🚀 Projects
 
 ### 1) NC Connector for Thunderbird
+
+<p align="left">
+  <a href="https://github.com/nc-connector/NC_Connector_for_Thunderbird/releases">
+    <img alt="Releases" src="https://img.shields.io/github/v/release/nc-connector/NC_Connector_for_Thunderbird?display_name=tag&logo=github">
+  </a>
+  <a href="https://github.com/nc-connector/NC_Connector_for_Thunderbird/blob/main/LICENSE">
+    <img alt="License" src="https://img.shields.io/badge/License-AGPL--3.0-informational">
+  </a>
+  <a href="https://github.com/nc-connector/NC_Connector_for_Thunderbird/stargazers">
+    <img alt="Stars" src="https://img.shields.io/github/stars/nc-connector/NC_Connector_for_Thunderbird?style=flat">
+  </a>
+</p>
+
 **Repo:** https://github.com/nc-connector/NC_Connector_for_Thunderbird  
 **What it solves:** Create Talk meetings from calendar events and generate secure Nextcloud shares right from the compose window — without browser detours.
 
@@ -62,6 +60,19 @@ If you find these connectors useful and want to support ongoing development, you
 ---
 
 ### 2) NC Connector for Outlook (Classic)
+
+<p align="left">
+  <a href="https://github.com/nc-connector/NC_Connector_for_Outlook/releases">
+    <img alt="Releases" src="https://img.shields.io/github/v/release/nc-connector/NC_Connector_for_Outlook?display_name=tag&logo=github">
+  </a>
+  <a href="https://github.com/nc-connector/NC_Connector_for_Outlook/blob/main/LICENSE">
+    <img alt="License" src="https://img.shields.io/badge/License-AGPL--3.0-informational">
+  </a>
+  <a href="https://github.com/nc-connector/NC_Connector_for_Outlook/stargazers">
+    <img alt="Stars" src="https://img.shields.io/github/stars/nc-connector/NC_Connector_for_Outlook?style=flat">
+  </a>
+</p>
+
 **Repo:** https://github.com/nc-connector/NC_Connector_for_Outlook  
 **What it solves:** Professional Nextcloud workflow in Outlook Classic: Talk links in calendar events, Filelink assistant for emails — plus admin features.
 
@@ -114,4 +125,4 @@ This is a **community project** and **not an official product of Nextcloud GmbH*
 <p align="center">
   <sub>Built with ❤️ for clean workflows: Calendar ↔ Talk ↔ Filesharing ↔ Email</sub>
 </p>
-```0
+
