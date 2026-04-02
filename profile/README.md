@@ -77,7 +77,9 @@ Optional Nextcloud backend for central administration of NC Connector.
 - Central template management for Share and Talk
 
 **Status**
-- 🛠️ Work in progress
+- Released !
+- [Nextcloud App Store](https://apps.nextcloud.com/apps/ncc_backend_4mc)
+  https://apps.nextcloud.com/apps/ncc_backend_4mc
 
 **Repo**
 - [Server_Backend](https://github.com/nc-connector/Server_Backend)
