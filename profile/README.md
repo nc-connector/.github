@@ -91,11 +91,25 @@ If unsure where to start, open an issue with your use case.
 
 ---
 
-## Support this project
+## If you’d like to support the project, we’d really appreciate:
+
+- ⭐ **GitHub stars**
+  - [NC Connector for Thunderbird](https://github.com/nc-connector/NC_Connector_for_Thunderbird)
+  - [NC Connector for Outlook Classic](https://github.com/nc-connector/NC_Connector_for_Outlook)
+  - [NC Connector Server Backend](https://github.com/nc-connector/Server_Backend)
+
+- 📝 **ATN rating / feedback**
+  - [Thunderbird Add-on (ATN)](https://addons.thunderbird.net/de/thunderbird/addon/nc4tb/)
+
+- 💬 **Website feedback**
+  - [Trust & Transparency](https://nc-connector.de/vertrauen-transparenz/)
+  - [Contact](https://nc-connector.de/kontakt/)
 
 If NC Connector helps your team and you want to support development:
 
 👉 [PayPal](https://www.paypal.com/donate/?hosted_button_id=FTZWNRNKVKUN6)
+
+Thanks a lot for your support.
 
 ---
 
