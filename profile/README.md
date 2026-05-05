@@ -8,7 +8,7 @@
 
 <p align="center">
   <b>Nextcloud workflows directly inside mail and calendar clients.</b><br/>
-  Share files, create Talk meetings, automate attachment handling, and optionally manage policies centrally with the backend.
+  Share files, create Talk meetings, automate attachment handling, manage central email signatures, and optionally control policies with the backend.
 </p>
 
 <p align="center">
@@ -34,7 +34,7 @@
 |---|---|---|---|
 | **NC Connector for Thunderbird** | Add-on for sharing and Talk workflows in Thunderbird ESR | Active | [Repo](https://github.com/nc-connector/NC_Connector_for_Thunderbird) · [ATN](https://addons.thunderbird.net/thunderbird/addon/nc4tb/) · [Releases](https://github.com/nc-connector/NC_Connector_for_Thunderbird/releases/latest) |
 | **NC Connector for Outlook Classic** | COM Add-in for sharing, Talk workflows, and IFB/Free-Busy integration | Active | [Repo](https://github.com/nc-connector/NC_Connector_for_Outlook) · [Releases](https://github.com/nc-connector/NC_Connector_for_Outlook/releases/latest) |
-| **NC Connector Server Backend** | Optional Nextcloud backend for central policy and seat management | Active | [Repo](https://github.com/nc-connector/Server_Backend) · [App Store](https://apps.nextcloud.com/apps/ncc_backend_4mc) |
+| **NC Connector Server Backend** | Optional Nextcloud backend for central policy, seat, and email-signature management | Active | [Repo](https://github.com/nc-connector/Server_Backend) · [App Store](https://apps.nextcloud.com/apps/ncc_backend_4mc) |
 
 ---
 
@@ -57,7 +57,9 @@
 - Talk room creation from calendar events
 - Security defaults such as passwords, expirations, lobby, and moderation
 - Structured debug logs for support and troubleshooting
-- Optional backend control for central policies, seat assignment, and templates
+- Optional backend control for central policies, seat assignment, templates, and branded output
+- Central email signatures with policy controls for compose, reply, and forward
+- E-Mail Signature templates autofilled with user profile variables (for example name, email, phone, organization, about)
 
 ---
 
@@ -66,7 +68,7 @@
 - Thunderbird ESR (Thunderbird add-on)
 - Outlook Classic on Windows (COM Add-in)
 - Nextcloud (for backend mode)
-- NC Connector add-on version **>= 3.0.0** for backend policy control
+- NC Connector add-on version **>= 3.0.0** for backend policy control (including central email signature policies)
 
 ---
 
