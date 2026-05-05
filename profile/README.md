@@ -68,8 +68,8 @@
 - Thunderbird ESR (Thunderbird add-on)
 - Outlook Classic on Windows (COM Add-in)
 - Nextcloud (for backend mode)
-- NC Connector add-on version **>= 3.0.0** for backend policy control (including central email signature policies)
-
+- NC Connector add-on version **>= 3.0.0** for backend policy control
+- NC Connector add-on version **>= 3.1.0** for centrally managed E-mail Signature / Templates
 ---
 
 ## Support
