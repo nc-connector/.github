@@ -42,6 +42,10 @@ It connects Thunderbird and Outlook Classic to Nextcloud without routing file sh
 | **NC Connector for Outlook Classic** | COM add-in for Nextcloud shares, Talk workflows, IFB/Free-Busy, signatures, and update checks | [Repo](https://github.com/nc-connector/NC_Connector_for_Outlook) · [Releases](https://github.com/nc-connector/NC_Connector_for_Outlook/releases/latest) |
 | **NC Connector Server Backend** | Optional Nextcloud app for seats, policies, templates, signatures, and team-wide defaults | [Repo](https://github.com/nc-connector/Server_Backend) · [App Store](https://apps.nextcloud.com/apps/ncc_backend_4mc) |
 
+## Roadmap
+
+Planned work across Thunderbird, Outlook, and the Backend is tracked in the public [NC Connector Roadmap](https://github.com/orgs/nc-connector/projects/1).
+
 ## What NC Connector Covers
 
 - Nextcloud file shares directly from compose windows, replies, and forwards
