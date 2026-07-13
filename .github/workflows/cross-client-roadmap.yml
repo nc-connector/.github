@@ -1,0 +1,365 @@
+name: Cross-client roadmap sync
+
+on:
+  workflow_call:
+    inputs:
+      issue-owner:
+        required: true
+        type: string
+      issue-repo:
+        required: true
+        type: string
+      issue-number:
+        required: true
+        type: string
+      action:
+        required: true
+        type: string
+      label-name:
+        required: false
+        type: string
+    secrets:
+      NC_CONNECTOR_ROADMAP_TOKEN:
+        required: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync cross-client roadmap issue
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.NC_CONNECTOR_ROADMAP_TOKEN }}
+          script: |
+            const issueOwner = '${{ inputs.issue-owner }}';
+            const issueRepo = '${{ inputs.issue-repo }}';
+            const issueNumber = Number('${{ inputs.issue-number }}');
+            const action = '${{ inputs.action }}';
+            const labelName = '${{ inputs.label-name }}';
+
+            const projectNumber = 1;
+            const projectOwner = 'nc-connector';
+            const implementationStart = '<!-- nc-roadmap-implementation:start -->';
+            const implementationEnd = '<!-- nc-roadmap-implementation:end -->';
+            const parentMarker = `<!-- nc-roadmap-parent: ${issueOwner}/${issueRepo}#${issueNumber} -->`;
+
+            const products = [
+              { key: 'thunderbird', name: 'Thunderbird', repo: 'NC_Connector_for_Thunderbird', label: 'product: thunderbird' },
+              { key: 'outlook', name: 'Outlook', repo: 'NC_Connector_for_Outlook', label: 'product: outlook' },
+              { key: 'backend', name: 'Backend', repo: 'Server_Backend', label: 'product: backend' },
+            ];
+
+            const project = await loadProject();
+            const parent = await loadIssue(issueOwner, issueRepo, issueNumber);
+            const parentLabels = parent.labels.map((label) => label.name);
+            if (!parentLabels.includes('cross-client')) {
+              core.info('Issue is not labelled cross-client; nothing to sync.');
+              return;
+            }
+
+            await addLabels(issueOwner, issueRepo, issueNumber, ['roadmap']);
+            const parentNode = await loadIssueNode(issueOwner, issueRepo, issueNumber);
+            const parentItemId = await addToProject(project.id, parentNode.id);
+            await setProjectSelect(project, parentItemId, 'Product', 'Cross-client');
+
+            if (action === 'closed' || action === 'reopened') {
+              await syncChildState(parent, project);
+              return;
+            }
+
+            if (action !== 'labeled' || labelName !== 'cross-client') {
+              core.info(`Ignoring issue action ${action}.`);
+              return;
+            }
+
+            const selectedProducts = resolveProducts(parent.body || '');
+            const childIssues = [];
+            for (const product of selectedProducts) {
+              const child = await getOrCreateProductIssue(parent, parentNode, product, project);
+              childIssues.push({ product, child });
+            }
+
+            await updateImplementationBlock(parent, childIssues);
+
+            async function loadProject() {
+              const query = `
+                query($owner:String!, $number:Int!) {
+                  organization(login:$owner) {
+                    issueTypes(first:20) {
+                      nodes { id name isEnabled }
+                    }
+                    projectV2(number:$number) {
+                      id
+                      fields(first:50) {
+                        nodes {
+                          ... on ProjectV2SingleSelectField {
+                            id
+                            name
+                            options { id name }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              `;
+              const result = await github.graphql(query, { owner: projectOwner, number: projectNumber });
+              return {
+                id: result.organization.projectV2.id,
+                fields: result.organization.projectV2.fields.nodes.filter(Boolean),
+                issueTypes: result.organization.issueTypes.nodes.filter((type) => type.isEnabled),
+              };
+            }
+
+            async function loadIssue(owner, repo, number) {
+              const { data } = await github.rest.issues.get({ owner, repo, issue_number: number });
+              return data;
+            }
+
+            async function loadIssueNode(owner, repo, number) {
+              const query = `
+                query($owner:String!, $repo:String!, $number:Int!) {
+                  repository(owner:$owner, name:$repo) {
+                    issue(number:$number) {
+                      id
+                      issueType { id name }
+                    }
+                  }
+                }
+              `;
+              const result = await github.graphql(query, { owner, repo, number });
+              return result.repository.issue;
+            }
+
+            async function loadRepository(owner, repo) {
+              const query = `
+                query($owner:String!, $repo:String!) {
+                  repository(owner:$owner, name:$repo) {
+                    id
+                    labels(first:100) {
+                      nodes { id name }
+                    }
+                  }
+                }
+              `;
+              const result = await github.graphql(query, { owner, repo });
+              return result.repository;
+            }
+
+            async function addLabels(owner, repo, number, labels) {
+              await github.rest.issues.addLabels({ owner, repo, issue_number: number, labels });
+            }
+
+            function resolveProducts(body) {
+              const marker = body.match(/<!--\s*nc-roadmap-products:\s*([a-z,\s-]+)\s*-->/i);
+              const selected = marker
+                ? marker[1].split(',').map((value) => value.trim().toLowerCase()).filter(Boolean)
+                : products.map((product) => product.key);
+              const known = products.filter((product) => selected.includes(product.key));
+              if (known.length === 0) {
+                throw new Error('No valid roadmap products selected.');
+              }
+              return known;
+            }
+
+            async function getOrCreateProductIssue(parentIssue, parentIssueNode, product, projectInfo) {
+              const existing = await findProductIssue(product, parentIssue.html_url);
+              if (existing) {
+                await addLabels(projectOwner, product.repo, existing.number, ['roadmap', product.label]);
+                const existingNode = await loadIssueNode(projectOwner, product.repo, existing.number);
+                const itemId = await addToProject(projectInfo.id, existingNode.id);
+                await setProjectSelect(projectInfo, itemId, 'Product', product.name);
+                await syncIssueType(existingNode.id, parentIssueNode.issueType?.name, projectInfo);
+                return existing;
+              }
+
+              const repository = await loadRepository(projectOwner, product.repo);
+              const labelIds = repository.labels.nodes
+                .filter((label) => ['roadmap', product.label].includes(label.name))
+                .map((label) => label.id);
+              const issueTypeId = findIssueTypeId(projectInfo, parentIssueNode.issueType?.name);
+              const title = `${product.name}: ${parentIssue.title}`;
+              const body = [
+                parentMarker,
+                '',
+                `Part of cross-client roadmap item: ${parentIssue.html_url}`,
+                '',
+                `This issue tracks the ${product.name} implementation work for the cross-client request.`,
+              ].join('\n');
+
+              const mutation = `
+                mutation($input: CreateIssueInput!) {
+                  createIssue(input:$input) {
+                    issue { id number title url }
+                  }
+                }
+              `;
+              const result = await github.graphql(mutation, {
+                input: {
+                  repositoryId: repository.id,
+                  title,
+                  body,
+                  labelIds,
+                  projectV2Ids: [projectInfo.id],
+                  issueTypeId,
+                },
+              });
+              const issue = result.createIssue.issue;
+              const itemId = await addToProject(projectInfo.id, issue.id);
+              await setProjectSelect(projectInfo, itemId, 'Product', product.name);
+              return { number: issue.number, title: issue.title, html_url: issue.url };
+            }
+
+            async function findProductIssue(product, parentUrl) {
+              const query = `repo:${projectOwner}/${product.repo} is:issue ${JSON.stringify(parentUrl)}`;
+              const { data } = await github.rest.search.issuesAndPullRequests({ q: query });
+              return data.items.find((item) => item.pull_request === undefined) || null;
+            }
+
+            function findIssueTypeId(projectInfo, issueTypeName) {
+              const fallback = 'Feature';
+              const wanted = issueTypeName || fallback;
+              const found = projectInfo.issueTypes.find((type) => type.name.toLowerCase() === wanted.toLowerCase());
+              return found?.id || projectInfo.issueTypes.find((type) => type.name === fallback)?.id;
+            }
+
+            async function syncIssueType(issueId, issueTypeName, projectInfo) {
+              const issueTypeId = findIssueTypeId(projectInfo, issueTypeName);
+              if (!issueTypeId) {
+                return;
+              }
+              const mutation = `
+                mutation($issueId:ID!, $issueTypeId:ID!) {
+                  updateIssueIssueType(input:{ issueId:$issueId, issueTypeId:$issueTypeId }) {
+                    issue { id }
+                  }
+                }
+              `;
+              await github.graphql(mutation, { issueId, issueTypeId });
+            }
+
+            async function addToProject(projectId, contentId) {
+              const mutation = `
+                mutation($projectId:ID!, $contentId:ID!) {
+                  addProjectV2ItemById(input:{ projectId:$projectId, contentId:$contentId }) {
+                    item { id }
+                  }
+                }
+              `;
+              try {
+                const result = await github.graphql(mutation, { projectId, contentId });
+                return result.addProjectV2ItemById.item.id;
+              } catch (error) {
+                if (!String(error.message || '').includes('already exists')) {
+                  throw error;
+                }
+                return await findProjectItemId(projectId, contentId);
+              }
+            }
+
+            async function findProjectItemId(projectId, contentId) {
+              const query = `
+                query($projectId:ID!) {
+                  node(id:$projectId) {
+                    ... on ProjectV2 {
+                      items(first:100) {
+                        nodes {
+                          id
+                          content { ... on Issue { id } }
+                        }
+                      }
+                    }
+                  }
+                }
+              `;
+              const result = await github.graphql(query, { projectId });
+              const item = result.node.items.nodes.find((node) => node.content?.id === contentId);
+              if (!item) {
+                throw new Error('Project item was not found after addProjectV2ItemById reported that it exists.');
+              }
+              return item.id;
+            }
+
+            async function setProjectSelect(projectInfo, itemId, fieldName, optionName) {
+              const field = projectInfo.fields.find((entry) => entry.name === fieldName);
+              const option = field?.options.find((entry) => entry.name === optionName);
+              if (!field || !option) {
+                core.info(`Project field ${fieldName} option ${optionName} not found.`);
+                return;
+              }
+              const mutation = `
+                mutation($projectId:ID!, $itemId:ID!, $fieldId:ID!, $optionId:String!) {
+                  updateProjectV2ItemFieldValue(input:{
+                    projectId:$projectId,
+                    itemId:$itemId,
+                    fieldId:$fieldId,
+                    value:{ singleSelectOptionId:$optionId }
+                  }) {
+                    projectV2Item { id }
+                  }
+                }
+              `;
+              await github.graphql(mutation, {
+                projectId: projectInfo.id,
+                itemId,
+                fieldId: field.id,
+                optionId: option.id,
+              });
+            }
+
+            async function updateImplementationBlock(parentIssue, childIssues) {
+              const lines = [
+                implementationStart,
+                '## Implementation issues',
+                '',
+                ...childIssues.map(({ product, child }) => `- ${product.name}: ${child.html_url}`),
+                implementationEnd,
+              ];
+              const block = lines.join('\n');
+              const body = parentIssue.body || '';
+              const pattern = new RegExp(`${escapeRegExp(implementationStart)}[\\s\\S]*?${escapeRegExp(implementationEnd)}`);
+              const nextBody = pattern.test(body)
+                ? body.replace(pattern, block)
+                : `${body.trim()}\n\n${block}`.trim();
+              if (nextBody === body) {
+                return;
+              }
+              await github.rest.issues.update({
+                owner: issueOwner,
+                repo: issueRepo,
+                issue_number: issueNumber,
+                body: nextBody,
+              });
+            }
+
+            async function syncChildState(parentIssue, projectInfo) {
+              const children = await findChildIssues(parentIssue.html_url);
+              const closed = action === 'closed';
+              for (const { product, issue } of children) {
+                await github.rest.issues.update({
+                  owner: projectOwner,
+                  repo: product.repo,
+                  issue_number: issue.number,
+                  state: closed ? 'closed' : 'open',
+                  ...(closed ? { state_reason: parentIssue.state_reason || 'completed' } : {}),
+                });
+                const node = await loadIssueNode(projectOwner, product.repo, issue.number);
+                const itemId = await addToProject(projectInfo.id, node.id);
+                await setProjectSelect(projectInfo, itemId, 'Status', closed ? 'Done' : 'Todo');
+              }
+            }
+
+            async function findChildIssues(parentUrl) {
+              const children = [];
+              for (const product of products) {
+                const found = await findProductIssue(product, parentUrl);
+                if (found) {
+                  children.push({ product, issue: found });
+                }
+              }
+              return children;
+            }
+
+            function escapeRegExp(value) {
+              return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            }
