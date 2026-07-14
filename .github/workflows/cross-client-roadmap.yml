@@ -18,6 +18,9 @@ on:
       label-name:
         required: false
         type: string
+      issue-url:
+        required: true
+        type: string
     secrets:
       NC_CONNECTOR_ROADMAP_TOKEN:
         required: true
@@ -36,6 +39,7 @@ jobs:
             const issueNumber = Number('${{ inputs.issue-number }}');
             const action = '${{ inputs.action }}';
             const labelName = '${{ inputs.label-name }}';
+            const issueUrl = '${{ inputs.issue-url }}';
 
             const projectNumber = 1;
             const projectOwner = 'nc-connector';
@@ -50,6 +54,11 @@ jobs:
             ];
 
             const project = await loadProject();
+            if (action === 'deleted') {
+              await deleteChildIssues(issueUrl);
+              return;
+            }
+
             const parent = await loadIssue(issueOwner, issueRepo, issueNumber);
             const parentLabels = parent.labels.map((label) => label.name);
             if (!parentLabels.includes('cross-client')) {
@@ -334,7 +343,7 @@ jobs:
 
             async function syncChildState(parentIssue, projectInfo) {
               const children = await findChildIssues(parentIssue.html_url);
-              const closed = action === 'closed';
+              const closed = action !== 'reopened';
               for (const { product, issue } of children) {
                 await github.rest.issues.update({
                   owner: projectOwner,
@@ -358,6 +367,20 @@ jobs:
                 }
               }
               return children;
+            }
+
+            async function deleteChildIssues(parentUrl) {
+              const children = await findChildIssues(parentUrl);
+              for (const { issue } of children) {
+                const mutation = `
+                  mutation($issueId:ID!) {
+                    deleteIssue(input:{ issueId:$issueId }) {
+                      clientMutationId
+                    }
+                  }
+                `;
+                await github.graphql(mutation, { issueId: issue.node_id });
+              }
             }
 
             function escapeRegExp(value) {
