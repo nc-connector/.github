@@ -8,7 +8,7 @@
 
 <p align="center">
   <b>Open-source Nextcloud integrations for Thunderbird and Outlook Classic.</b><br/>
-  File sharing, Talk rooms, central signatures, attachment rules, and policy control on your own Nextcloud infrastructure.
+  Share files, create Talk meetings, and handle attachments without leaving your mail or calendar.
 </p>
 
 <p align="center">
@@ -28,88 +28,61 @@
 
 ---
 
-## Position
+## Share files and plan meetings
 
-NC Connector keeps everyday team workflows where people already work: in mail and calendar clients.
+- Combine files and folders from your computer and **My Nextcloud** in one share. Existing Nextcloud files are copied into the share; the originals stay unchanged.
+- Send links instead of large attachments, with passwords, expiration dates, and access permissions.
+- Use attachment rules to share large attachments or route all attachments through NC Connector.
+- Create and update Talk meetings from calendar events, with password protection, a lobby, and moderation options.
+- View Nextcloud availability in Outlook's Scheduling Assistant.
 
-It connects Thunderbird and Outlook Classic to Nextcloud without routing file shares, meeting links, signatures, or policy decisions through a third-party SaaS. The clients stay close to the user. The backend, when used, stays on your Nextcloud.
+<p align="center">
+  <a href="https://raw.githubusercontent.com/nc-connector/.github/refs/heads/main/profile/sharing-queue-outlook.jpg">
+    <img src="https://raw.githubusercontent.com/nc-connector/.github/refs/heads/main/profile/sharing-queue-outlook.jpg" alt="Outlook sharing queue with local files, My Nextcloud, an expandable folder tree, and the target folder" width="680">
+  </a>
+  <br/>
+  <em>Sharing queue in Outlook Classic. Click the image to enlarge.</em>
+</p>
 
 ## Projects
 
 | Project | What it does | Links |
 |---|---|---|
-| **NC Connector for Thunderbird** | Thunderbird-native sharing, Talk meetings, attachment rules, and backend-managed signatures | [Repo](https://github.com/nc-connector/NC_Connector_for_Thunderbird) · [ATN](https://addons.thunderbird.net/thunderbird/addon/nc4tb/) · [Releases](https://github.com/nc-connector/NC_Connector_for_Thunderbird/releases/latest) |
-| **NC Connector for Outlook Classic** | COM add-in for Nextcloud shares, Talk workflows, IFB/Free-Busy, signatures, and update checks | [Repo](https://github.com/nc-connector/NC_Connector_for_Outlook) · [Releases](https://github.com/nc-connector/NC_Connector_for_Outlook/releases/latest) |
-| **NC Connector Server Backend** | Optional Nextcloud app for seats, policies, templates, signatures, and team-wide defaults | [Repo](https://github.com/nc-connector/Server_Backend) · [App Store](https://apps.nextcloud.com/apps/ncc_backend_4mc) |
+| **NC Connector for Thunderbird** | Nextcloud sharing, Talk meetings, and attachment rules in Thunderbird | [Repo](https://github.com/nc-connector/NC_Connector_for_Thunderbird) · [Install from ATN](https://addons.thunderbird.net/thunderbird/addon/nc4tb/) · [Releases](https://github.com/nc-connector/NC_Connector_for_Thunderbird/releases/latest) |
+| **NC Connector for Outlook Classic** | Nextcloud sharing, Talk meetings, attachment rules, and calendar availability in Outlook Classic | [Repo](https://github.com/nc-connector/NC_Connector_for_Outlook) · [Releases](https://github.com/nc-connector/NC_Connector_for_Outlook/releases/latest) |
+| **NC Connector Backend** | Optional Nextcloud app for Pro features and central management, with one free user seat | [Repo](https://github.com/nc-connector/Server_Backend) · [Install from App Store](https://apps.nextcloud.com/apps/ncc_backend_4mc) |
+| **VFS Provider for Google Drive** | Separate add-on that connects Google Drive to compatible Thunderbird add-ons | [Repo and setup](https://github.com/nc-connector/vfs-provider-googledrive) |
 
-## Roadmap
+## One user free, Pro for your team
 
-Planned work across Thunderbird, Outlook, and the Backend is tracked in the public [NC Connector Roadmap](https://github.com/orgs/nc-connector/projects/1).
+Sharing, **My Nextcloud**, Talk, and attachment rules work without NC Connector Backend.
 
-## What NC Connector Covers
+The optional backend includes **one free Community seat**. Each seat is assigned to exactly one Nextcloud user and unlocks **all Pro features for that user**:
 
-- Nextcloud file shares directly from compose windows, replies, and forwards
-- Large file uploads with chunked WebDAV where supported
-- Passwords, expiration dates, permissions, and separate password delivery
-- Nextcloud Secret links for password delivery when the backend and Secrets app are available
-- Talk rooms from calendar events, including lobby and moderation options
-- Central email signatures with sender matching and policy controls
-- Attachment automation rules for large or all attachments
-- Backend policies for teams that need central defaults and locked settings
-- Debug logs for support without requiring users to inspect source code
+- Central settings and policies, with admin locks and delegated management
+- Centrally managed email signatures
+- Custom templates and branding for shares and Talk invitations
+- Separate password delivery by email or one-time Nextcloud Secrets links; the latter also require the Secrets app
+- Additional sources such as Google Drive, OneDrive, WebDAV, and compatible storage **in Thunderbird only**, using the respective provider add-ons
 
-## Backend Or No Backend
+Pro features are available only to users with an assigned seat. The free Community seat is sufficient; paid Pro plans provide the same features for teams, starting at five seats.
 
-NC Connector can be used directly with a Nextcloud account. That is enough for local sharing and Talk workflows.
+[Install the free backend](https://apps.nextcloud.com/apps/ncc_backend_4mc) · [Plans and licensing](https://nc-connector.de/preise-lizenzierung/)
 
-The backend is useful when an organization needs central rules:
+## Open source and your data
 
-- which users have seats
-- which sharing defaults apply
-- whether options are editable by users
-- which templates are used for share blocks, password mails, Talk invitations, and signatures
-- whether password delivery should use plaintext mail or Nextcloud Secret links
+File sharing and Talk use your own Nextcloud. Connected storage providers access the services you choose; file contents are not relayed through an NC Connector-hosted service.
 
-## Trust Model
+Update checks contact NC Connector for release information and anonymous usage counts. Backend license checks are separate from file transfers. Source code, release history, and third-party dependency notices are available in the project repositories.
 
-- Source code and release history are public on GitHub
-- Client-side data stays between the mail client and your Nextcloud
-- No client telemetry is required for the add-ins to work
-- Backend operation is self-hosted inside Nextcloud
-- Admin-controlled settings are visible to users instead of being silently hidden
-- Third-party libraries are vendored and documented in each repository
+[Trust and transparency](https://nc-connector.de/vertrauen-transparenz/)
 
-## Website
+## Documentation and support
 
-- [Homepage](https://nc-connector.de/)
-- [Pricing and licensing](https://nc-connector.de/preise-lizenzierung/)
-- [Trust and transparency](https://nc-connector.de/vertrauen-transparenz/)
-- [Contact](https://nc-connector.de/kontakt/)
+- Setup and administration: [Thunderbird](https://github.com/nc-connector/NC_Connector_for_Thunderbird/blob/main/docs/ADMIN.md) · [Outlook Classic](https://github.com/nc-connector/NC_Connector_for_Outlook/blob/main/docs/ADMIN.md)
+- Planned work: [Public roadmap](https://github.com/orgs/nc-connector/projects/1)
+- Questions and rollout help: [Homepage](https://nc-connector.de/) · [Contact](https://nc-connector.de/kontakt/)
 
-## Support
+For bugs or feature requests, open an issue in the relevant project repository with the affected versions and steps to reproduce. Remove credentials and personal information before attaching logs.
 
-Please open issues in the relevant repository:
-
-- Thunderbird topics: [NC_Connector_for_Thunderbird](https://github.com/nc-connector/NC_Connector_for_Thunderbird/issues)
-- Outlook topics: [NC_Connector_for_Outlook](https://github.com/nc-connector/NC_Connector_for_Outlook/issues)
-- Backend topics: [Server_Backend](https://github.com/nc-connector/Server_Backend/issues)
-
-Useful issue details:
-
-- product and version
-- Thunderbird or Outlook version
-- Nextcloud version and enabled apps
-- backend version, if used
-- relevant debug logs with secrets removed
-- short reproduction steps
-
-## Support The Project
-
-If NC Connector helps your team, stars and feedback help others find it:
-
-- ⭐ [Star NC Connector for Thunderbird](https://github.com/nc-connector/NC_Connector_for_Thunderbird)
-- ⭐ [Star NC Connector for Outlook Classic](https://github.com/nc-connector/NC_Connector_for_Outlook)
-- ⭐ [Star NC Connector Server Backend](https://github.com/nc-connector/Server_Backend)
-- [Rate the Thunderbird add-on on ATN](https://addons.thunderbird.net/de/thunderbird/addon/nc4tb/)
-
-For teams using the backend in production, see [pricing and licensing](https://nc-connector.de/preise-lizenzierung/).
+Feedback, GitHub stars, and [Thunderbird add-on reviews](https://addons.thunderbird.net/thunderbird/addon/nc4tb/) help others find NC Connector.
